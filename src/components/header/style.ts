@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 
 export const HeaderContainer = styled.header`
-  background-color:  #993399;
+  background-color:  #8A05BE;
   padding: 20px;
   color: white;
 `;

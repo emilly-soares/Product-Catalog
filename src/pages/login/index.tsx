@@ -2,6 +2,7 @@ import React, { FormEvent, useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../services/firebaseConnection';
+import { Header } from '../../components/header';
 
 export const Login: React.FC = () => {
     const [email, setEmail] = useState('');
