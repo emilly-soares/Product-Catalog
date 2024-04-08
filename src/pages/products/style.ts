@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -34,4 +34,22 @@ export const CardTitle = styled.h2`
 export const CardText = styled.p`
   font-size: 14px;
   margin-bottom: 0.3rem;
+`;
+
+export const FavoriteButton = styled.button`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 10px;
+  outline: none; 
+
+  color: black; 
+
+  ${(props) =>
+    props.favorite &&
+    css`
+      color: purple; 
+    `}
+
 `;

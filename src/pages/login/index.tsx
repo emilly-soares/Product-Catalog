@@ -2,7 +2,7 @@ import React, { FormEvent, useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../services/firebaseConnection';
-import { Header } from '../../components/header';
+import * as S from './style';
 
 export const Login: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -20,7 +20,7 @@ export const Login: React.FC = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then(() => {
                 console.log("logado");
-                //navigate('/produto/5');
+                navigate('/produtos');
             })
             .catch((error) => {
                 console.log('error');
@@ -29,29 +29,29 @@ export const Login: React.FC = () => {
     };
 
     return (
-        <div>
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="email">Email de usuário:</label>
-                    <input
+        <S.Container>
+            <S.Form onSubmit={handleSubmit}>
+                <S.Title>Login</S.Title>
+                <S.FormGroup>
+                    <S.Label htmlFor="email">Email de usuário:</S.Label>
+                    <S.Input
                         type="text"
                         id="email"
                         value={email}
                         onChange={(event) => setEmail(event.target.value)}
                     />
-                </div>
-                <div>
-                    <label htmlFor="password">Senha:</label>
-                    <input
+                </S.FormGroup>
+                <S.FormGroup>
+                    <S.Label htmlFor="password">Senha:</S.Label>
+                    <S.Input
                         type="password"
                         id="password"
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
                     />
-                </div>
-                <button type="submit">Login</button>
-            </form>
-        </div>
+                </S.FormGroup>
+                <S.Button type="submit">Login</S.Button>
+            </S.Form>
+        </S.Container>
     );
 };
