@@ -35,7 +35,6 @@ export function Products() {
     getProducts();
   }, []);
 
-
   const handleFavoriteProduct = (produtoId: string) => {
     handleFavorite(produtoId);
     setProducts(products.map(p => p.id === produtoId ? { ...p, favorite: true } : p));
@@ -48,6 +47,10 @@ export function Products() {
     console.log(`ID ${produtoId} desfavoritado`);
   };
 
+  const handleDetails = (produtoId: string) => {
+    history.push(`/product/${produtoId}`);
+  };
+
   return (
     <S.Container>
       {products.map(p => (
@@ -57,9 +60,12 @@ export function Products() {
             <S.CardTitle>{p.title}</S.CardTitle>
             <S.CardText>Condição: {p.condition}</S.CardText>
             <S.CardText>Preço: {p.price}</S.CardText>
-            <S.FavoriteButton onClick={() => p.favorite ? handleUnfavoriteProduct(p.id) : handleFavoriteProduct(p.id)} favorite={p.favorite}>
-              <FaHeart size={24} color={p.favorite ? 'purple' : 'black'} />
-            </S.FavoriteButton>
+            <div>
+              <S.FavoriteButton onClick={() => p.favorite ? handleUnfavoriteProduct(p.id) : handleFavoriteProduct(p.id)} favorite={p.favorite}>
+                <FaHeart size={24} color={p.favorite ? 'purple' : 'black'} />
+              </S.FavoriteButton>
+              <S.DetailsButton to={`/product/${p.id}`}>Mais Detalhes</S.DetailsButton>
+            </div>
           </S.CardInfo>
         </S.Card>
       ))}
