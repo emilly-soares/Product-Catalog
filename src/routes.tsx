@@ -4,10 +4,15 @@ import { Login } from './pages/login'
 import { Products } from './pages/products'
 import { Product } from './pages/product'
 import { Favorites } from './pages/favorites'
+import UserProvider from './contexts/UserContext'
 
 const router = createBrowserRouter([
   {
-    element: <Layout />,
+    element: (
+      <UserProvider>
+        <Layout />
+      </UserProvider>
+    ),
     children: [
       {
         path: '/login',

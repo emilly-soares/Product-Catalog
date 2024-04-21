@@ -1,31 +1,37 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../services/firebaseConnection';
+import { useUser } from '../../contexts/UserContext';
 import * as S from './style';
 
 export const Login: React.FC = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const { email, setEmail, password, setPassword } = useUser(); 
     const navigate = useNavigate();
-    
-    const handleSubmit = (event: FormEvent) => {
+
+    const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(event.target.value); 
+    };
+
+    const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(event.target.value); 
+    };
+
+    const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
 
-        if (email === '' || password === '') {
+        if (!email || !password) {
             alert('Preencha todos os campos');
             return;
         }
 
-        signInWithEmailAndPassword(auth, email, password)
-            .then(() => {
-                console.log("logado");
-                navigate('/produtos');
-            })
-            .catch((error) => {
-                console.log('error');
-                console.log(error);
-            });
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            console.log("logado");
+            navigate('/');
+        } catch (error) {
+            console.error('Erro ao fazer login:', error);
+        }
     };
 
     return (
@@ -38,7 +44,7 @@ export const Login: React.FC = () => {
                         type="text"
                         id="email"
                         value={email}
-                        onChange={(event) => setEmail(event.target.value)}
+                        onChange={handleEmailChange}
                     />
                 </S.FormGroup>
                 <S.FormGroup>
@@ -47,7 +53,7 @@ export const Login: React.FC = () => {
                         type="password"
                         id="password"
                         value={password}
-                        onChange={(event) => setPassword(event.target.value)}
+                        onChange={handlePasswordChange}
                     />
                 </S.FormGroup>
                 <S.Button type="submit">Login</S.Button>
