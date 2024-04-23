@@ -1,9 +1,9 @@
 import React from 'react';
-import { useCart, CartItem  } from '../../contexts/CartContext';
-import * as S from './style.ts';  
+import { useCart, CartItem } from '../../contexts/CartContext';
+import * as S from './style.ts';
 
 interface CartModalProps {
-    onClose: () => void;  
+  onClose: () => void;
 }
 
 export const CartModal: React.FC<CartModalProps> = ({ onClose }) => {
@@ -29,9 +29,9 @@ export const CartModal: React.FC<CartModalProps> = ({ onClose }) => {
           <div key={item.id}>
             <h2>{item.name}</h2>
             <p>Quantidade: {item.quantity}</p>
+            <p>Preço: ${item.price}</p>
             <S.QuantityButton onClick={() => updateQuantity(item.id, item.quantity - 1)}> - </S.QuantityButton>
             <S.QuantityButton onClick={() => updateQuantity(item.id, item.quantity + 1)}> + </S.QuantityButton>
-            <p>Preço: ${item.price}</p>
             <S.RemoveButton onClick={() => removeFromCart(item.id)}>Remover</S.RemoveButton>
           </div>
         ))}

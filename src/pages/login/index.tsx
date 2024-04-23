@@ -6,15 +6,15 @@ import { useUser } from '../../contexts/UserContext';
 import * as S from './style';
 
 export const Login: React.FC = () => {
-    const { email, setEmail, password, setPassword } = useUser(); 
+    const { email, setEmail, password, setPassword, setName } = useUser();
     const navigate = useNavigate();
 
     const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(event.target.value); 
+        setEmail(event.target.value);
     };
 
     const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(event.target.value); 
+        setPassword(event.target.value);
     };
 
     const handleSubmit = async (event: FormEvent) => {
@@ -26,9 +26,16 @@ export const Login: React.FC = () => {
         }
 
         try {
-            await signInWithEmailAndPassword(auth, email, password);
-            console.log("logado");
-            navigate('/');
+            const result = await signInWithEmailAndPassword(auth, email, password);
+            const user = result.user;
+            if (user.displayName) {
+                setName(user.displayName);
+                console.log("Logado com sucesso!");
+                navigate('/');
+            } else {
+                console.log("Nome do usuário não disponível.");
+                navigate('/profile');
+            }
         } catch (error) {
             console.error('Erro ao fazer login:', error);
         }

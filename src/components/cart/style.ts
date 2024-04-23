@@ -20,12 +20,14 @@ export const ModalContent = styled.div`
   box-shadow: 0 4px 8px rgba(94, 52, 94, 0.2); 
   width: 90%;
   max-width: 500px;
+  max-height: 80vh; 
   z-index: 1001;
   display: flex;
   flex-direction: column;
   gap: 10px;
   overflow-y: auto; 
 `;
+
 
 export const Button = styled.button`
   padding: 8px 12px;
@@ -43,7 +45,7 @@ export const Button = styled.button`
 
 export const QuantityButton = styled(Button)`
   background-color: #7b1fa2;
-
+  margin-right: 0.1rem;
   &:hover {
     background-color: #9c27b0;
   }

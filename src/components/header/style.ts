@@ -27,6 +27,8 @@ export const StyledLink = styled(Link)`
   text-decoration: none;
   margin-right: 10px;
   font-weight: bold;
+  padding-right: 5%;
+  cursor: pointer;
 
   &:hover {
     text-decoration: underline;
