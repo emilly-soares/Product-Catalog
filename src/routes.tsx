@@ -5,13 +5,16 @@ import { Products } from './pages/products'
 import { Product } from './pages/product'
 import { Favorites } from './pages/favorites'
 import UserProvider from './contexts/UserContext'
+import { CartProvider } from './contexts/CartContext'
 
 const router = createBrowserRouter([
   {
     element: (
-      <UserProvider>
-        <Layout />
-      </UserProvider>
+      <CartProvider>
+        <UserProvider>
+          <Layout />
+        </UserProvider>
+      </CartProvider>
     ),
     children: [
       {

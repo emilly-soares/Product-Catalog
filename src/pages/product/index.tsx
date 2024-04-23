@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'; 
 import axios from 'axios';
-import { FaHeart } from 'react-icons/fa';
+import { FaHeart, FaShoppingCart } from 'react-icons/fa';  
 import * as S from './style.ts';
 import { handleFavorite, isFavorite, handleUnfavorite } from '../../services/favorites';
+import { useCart } from '../../contexts/CartContext';
 
 interface Produto {
   id: string;
@@ -17,11 +18,12 @@ interface Produto {
 export function Product() {
   const { productId } = useParams<{ productId: string }>();
   const [product, setProduct] = useState<Produto | null>(null);
+  const { dispatch } = useCart();  
 
   useEffect(() => {
     async function getProduct() {
       try {
-        const response = await axios.get(`https://api.mercadolibre.com/items/${productId}`); 
+        const response = await axios.get(`https://api.mercadolibre.com/items/${productId}`);
         const productData: Produto = {
           id: response.data.id,
           title: response.data.title,
@@ -37,32 +39,51 @@ export function Product() {
     }
 
     getProduct();
-  }, [productId]); 
+  }, [productId]);
+
+  const handleAddToCart = () => {
+    if (product) {
+      dispatch({
+        type: 'ADD_ITEM',
+        item: {
+          id: product.id,
+          name: product.title,
+          price: product.price,
+          quantity: 1,  
+        }
+      });
+    }
+  };
 
   const handleFavoriteProduct = (productId: string) => {
     handleFavorite(productId);
-    setProduct(prevProduct => prevProduct ? { ...prevProduct, favorite: true } : null); 
+    setProduct(prevProduct => prevProduct ? { ...prevProduct, favorite: true } : null);
     console.log(`ID ${productId} favoritado`);
   };
 
   const handleUnfavoriteProduct = (productId: string) => {
     handleUnfavorite(productId);
-    setProduct(prevProduct => prevProduct ? { ...prevProduct, favorite: false } : null); 
+    setProduct(prevProduct => prevProduct ? { ...prevProduct, favorite: false } : null);
     console.log(`ID ${productId} desfavoritado`);
   };
 
   return (
     <S.Container>
-      {product && ( 
+      {product && (
         <S.Card key={product.id}>
           <S.CardImage src={product.thumbnail} alt={product.title} />
           <S.CardInfo>
             <S.CardTitle>{product.title}</S.CardTitle>
             <S.CardText>Condição: {product.condition}</S.CardText>
             <S.CardText>Preço: {product.price}</S.CardText>
-            <S.FavoriteButton onClick={() => product.favorite ? handleUnfavoriteProduct(product.id) : handleFavoriteProduct(product.id)} favorite={product.favorite}>
-              <FaHeart size={24} color={product.favorite ? 'purple' : 'black'} />
-            </S.FavoriteButton>
+            <S.BContainer>
+              <S.FavoriteButton onClick={() => product.favorite ? handleUnfavoriteProduct(product.id) : handleFavoriteProduct(product.id)} favorite={product.favorite}>
+                <FaHeart size={24} color={product.favorite ? 'purple' : 'black'} />
+              </S.FavoriteButton>
+              <S.CartButton onClick={handleAddToCart}>
+                <FaShoppingCart size={24} />
+              </S.CartButton>
+            </S.BContainer>
           </S.CardInfo>
         </S.Card>
       )}
