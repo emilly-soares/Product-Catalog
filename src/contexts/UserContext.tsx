@@ -1,32 +1,33 @@
-import { ReactNode, createContext, useState, useContext } from "react";
-
-interface UserProviderProps {
-    children: ReactNode;
-}
+import { createContext, useState, ReactNode, Dispatch, SetStateAction } from 'react';
 
 interface UserContextData {
-    email: string;
-    setEmail: (email: string) => void;
-    password: string;
-    setPassword: (password: string) => void;
-    name: string;  
-    setName: (name: string) => void;  
+  name: string;
+  setName: Dispatch<SetStateAction<string>>;
+  email: string;
+  setEmail: Dispatch<SetStateAction<string>>;
+  password: string;
+  setPassword: Dispatch<SetStateAction<string>>;
 }
 
-export const UserContext = createContext<UserContextData>({} as UserContextData);
+const UserContext = createContext<UserContextData>({
+  name: '',
+  setName: () => {},
+  email: '',
+  setEmail: () => {},
+  password: '',
+  setPassword: () => {},
+});
 
-export default function UserProvider({ children }: UserProviderProps) {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [name, setName] = useState('');
+const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    return (
-        <UserContext.Provider value={{ email, setEmail, password, setPassword, name, setName }}>
-            {children}
-        </UserContext.Provider>
-    );
-}
+  return (
+    <UserContext.Provider value={{ name, setName, email, setEmail, password, setPassword }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
 
-export function useUser() {
-    return useContext(UserContext);
-}
+export { UserContext, UserProvider };

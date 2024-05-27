@@ -1,4 +1,4 @@
-import{ useState, FormEvent } from 'react';
+import { useState, FormEvent } from 'react';
 import { useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 import * as S from './style.ts'; 
