@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled  from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
@@ -50,20 +50,35 @@ export const DetailsButton = styled(Link)`
   }
 `;
 
-export const FavoriteButton = styled.button`
+export const BContainer = styled.div`
+  display: flex;
+  justify-content: space-around; 
+  align-items: center;          
+  padding: 10px 0;            
+  margin-top: 10px;         
+`;
+
+
+export const FavoriteButton = styled.button<{ favorite: boolean }>`
   background-color: transparent;
   border: none;
   cursor: pointer;
-  padding: 0;
-  margin-top: 10px;
-  outline: none; 
+  color: ${props => props.favorite ? 'purple' : 'black'};
+  font-size: 24px; 
 
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+export const CartButton = styled.button`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
   color: black; 
+  font-size: 24px; 
 
-  ${(props) =>
-    props.favorite &&
-    css`
-      color: purple; 
-    `}
-
+  &:hover {
+    opacity: 0.8;
+  }
 `;

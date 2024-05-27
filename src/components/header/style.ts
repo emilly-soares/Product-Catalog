@@ -12,16 +12,23 @@ export const Title = styled.h1`
   margin: 0;
 `;
 
-export const LinksContainer = styled.div`
-  margin-top: 10px;
-  font-size: 1.5rem;
+export const LeftLinksContainer = styled.div`
+  display: flex;
+  margin-right: auto; 
 `;
 
+export const LinksContainer = styled.div`
+  display: flex;
+  align-items: center; 
+  font-size: 1.5rem;
+`;
 export const StyledLink = styled(Link)`
   color: white;
   text-decoration: none;
   margin-right: 10px;
   font-weight: bold;
+  padding-right: 5%;
+  cursor: pointer;
 
   &:hover {
     text-decoration: underline;

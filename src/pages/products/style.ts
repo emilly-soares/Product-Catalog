@@ -1,6 +1,18 @@
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
+export const CartButton = styled.button`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: black; 
+  font-size: 24px; 
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
 export const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -67,3 +79,4 @@ export const FavoriteButton = styled.button`
     `}
 
 `;
+
